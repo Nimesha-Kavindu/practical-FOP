@@ -163,6 +163,7 @@ int main() {
     updateVegetablePrice(vegetables, count, 1007, 800.00);
     deleteVegetable(vegetables, count, 1004);
     itemsAbove500(count, vegetables);
+    billCalculation(count, vegetables);
 
     return 0;
 }
