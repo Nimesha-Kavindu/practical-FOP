@@ -66,6 +66,86 @@ void itemsAbove500(int count, Vegetable veg[]) {
     }
 }
 
+void billCalculation(int count, Vegetable veg[]) {
+
+    struct billInfo {
+        int id;
+        double quantity;
+        double price;
+    };
+
+    billInfo billing[10];
+    int num=0;
+    double totalBill=0;
+
+    int flag = 1;
+    while(flag){
+        int id;
+        double quantity;
+
+        cout << "Enter Item ID to purchase: ";
+        cin >> id;
+        cout << "Enter quantity (in Kg): ";
+        cin >> quantity;
+        
+        billing[num].id = id;
+        billing[num].quantity = quantity;
+        for (int i = 0; i < count; i++)
+        {
+            if (veg[i].itemID == id) {
+                billing[num].price = veg[i].pricePerKg * quantity;
+                break;
+            }   
+        }
+        
+        num++;
+
+        int choice;
+        cout << "Do you want to continue? (1/0): ";
+        cin >> choice;
+        if (choice != 1) {
+            flag = 0;
+        }
+    }
+
+    cout<<"Item ID\tQuantity\tPrice"<<endl;
+    for (int i = 0; i < num; i++) {
+        cout << billing[i].id << "\t" << billing[i].quantity << "\t" << billing[i].price << endl;
+    }
+
+    cout << "Total Bill Amount: ";
+    for (int i = 0; i < num; i++) {
+        totalBill += billing[i].price;
+    }
+    cout << totalBill << endl;
+
+    double discount = 0;
+    double totalNetAmount = 0;
+
+    for (int i = 0; i < num; i++)
+    {
+        if (billing[i].id == 1005 && billing[i].quantity > 5)
+        {
+            discount += billing[i].price * 0.2;
+        }
+        if (billing[i].id == 1007 && billing[i].quantity > 2.5)
+        {
+            discount += billing[i].price * 0.05;
+        }
+    }
+
+    cout<<"Discount price is "<<discount<<endl;
+    totalNetAmount = totalBill - discount;
+    cout<<"Total net amount is "<<totalNetAmount<<endl;
+
+    if (totalNetAmount > 5000)
+    {
+        cout << "Congratulations! You are eligible for a special discount." << endl;
+        cout << "Your new bill is: " << totalNetAmount * 0.5 << endl;  
+    }
+    
+}
+
 int main() {
 
     Vegetable vegetables[10] = {
